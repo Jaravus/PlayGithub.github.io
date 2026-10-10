@@ -60,8 +60,12 @@ async function resolveLaunchUrl(url) {
 
 async function play(exp) {
   if (exp.sourceOnly) {
-    window.open(exp.repoUrl, '_blank', 'noopener,noreferrer');
-    return;
+    const sourceResolved = await resolveLaunchUrl(exp.repoUrl);
+    if (!sourceResolved.playable) {
+      window.open(exp.repoUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
+    exp = { ...exp, url: sourceResolved.url, sourceOnly: false };
   }
   const resolved = await resolveLaunchUrl(exp.url);
   if (!resolved.playable) {
