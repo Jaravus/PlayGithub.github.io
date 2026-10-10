@@ -5,7 +5,7 @@ const experiences = [
   { id:'quiet-void', name:'Quiet Void', kind:'HTML5 game', tag:'LEGACY', art:'art-void', icon:'◌', author:'nullgarden', multiplayer:false, save:false, html:`<style>body{margin:0;background:#12111e;color:#c6baff;font:16px system-ui;text-align:center;height:100vh;display:grid;place-items:center}main{padding:30px}h1{font-weight:400;font-size:44px}button{padding:12px 20px;background:#3a315e;color:#eee4ff;border:1px solid #8f7fca;border-radius:5px}</style><main><div style="font-size:66px">◌</div><h1>QUIET VOID</h1><p>A small place to get lost.</p><button onclick="this.textContent='The void is listening…'">Enter</button></main>` },
   { id:'skyline', name:'Skyline FM', kind:'Instant site', tag:'SITE', art:'art-sky', icon:'⌁', author:'commonroom', multiplayer:false, save:false, html:`<style>body{margin:0;background:#e3f4fa;color:#15384a;font:18px system-ui;text-align:center;height:100vh;display:grid;place-items:center}main{padding:30px}h1{font-size:50px;letter-spacing:-.06em}button{padding:12px 20px;background:#15384a;color:#fff;border:0;border-radius:5px}</style><main><div style="font-size:66px">⌁</div><h1>SKYLINE FM</h1><p>An instant site loaded through the OpenWorld shell.</p><button onclick="this.textContent='Now playing · Skyline FM'">Play radio</button></main>` },
   { id:'lumen', name:'Lumen House', kind:'3D world', tag:'CONNECTED', art:'art-site', icon:'✧', author:'lumenlabs', multiplayer:true, save:true, html:`<style>body{margin:0;background:linear-gradient(120deg,#17294f,#1c6170);color:#e8ffff;font:16px system-ui;text-align:center;height:100vh;display:grid;place-items:center}main{padding:30px}h1{font-size:48px}button{padding:12px 20px;background:#8af9ed;color:#092027;border:0;border-radius:5px}</style><main><div style="font-size:66px">✧</div><h1>LUMEN HOUSE</h1><p>A social room with host capabilities enabled.</p><button onclick="this.textContent='Room joined ✓'">Join room</button></main>` }
-  ,{ id:'cyberleek', name:'CYBERLEEK Mirror', kind:'External static site', tag:'LEGACY', art:'art-neon', icon:'☼', author:'cyberleek-mirror', multiplayer:false, save:false, url:'https://cyberleek-mirror.github.io/cyberleek/' }
+  ,{ id:'playgta5', name:'PlayGTA5 Source', kind:'Incomplete source project', tag:'SOURCE ONLY', art:'art-void', icon:'▣', author:'shadany7824', multiplayer:false, save:false, sourceOnly:true, repoUrl:'https://github.com/shadany7824/playgta5' }
 ];
 
 const grid = document.querySelector('#experience-grid');
@@ -31,6 +31,10 @@ function render() {
 }
 
 function play(exp) {
+  if (exp.sourceOnly) {
+    window.open(exp.repoUrl, '_blank', 'noopener,noreferrer');
+    return;
+  }
   document.querySelector('#player-name').textContent = exp.name;
   document.querySelector('#player-mode').textContent = exp.tag === 'LEGACY' ? 'LEGACY MODE' : 'HOST API MODE';
   document.querySelectorAll('.player-capability').forEach((el, i) => { const enabled = i === 0 ? exp.multiplayer : exp.save; el.textContent = enabled ? `● ${i === 0 ? 'multiplayer' : 'save'} enabled` : `● no ${i === 0 ? 'multiplayer' : 'save'}`; el.classList.toggle('muted', !enabled); });
