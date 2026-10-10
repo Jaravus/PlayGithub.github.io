@@ -67,3 +67,9 @@ The root `index.html` is a buildless prototype of the player shell. It provides:
 - shareable player URLs and an explicit legacy mode that disables multiplayer and saves.
 
 Open `index.html` in a browser or serve the repository with any static file server. A raw GitHub repository is not itself an executable web page, so compatibility mode expects a hosted HTML entry point (for example GitHub Pages); a future loader can resolve repository URLs to pinned releases or Pages deployments.
+
+## GitHub Pages
+
+This repository is a buildless static site and is ready for GitHub Pages. The included `.nojekyll` marker prevents unnecessary Jekyll processing, and `.github/workflows/pages.yml` deploys the repository automatically whenever `main` changes.
+
+For a user site, the repository should be named `jaravus.github.io`. In GitHub, open **Settings → Pages**, choose **GitHub Actions** as the source, and wait for the first workflow run to finish. The site will be available at `https://jaravus.github.io/`.
