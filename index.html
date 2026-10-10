@@ -62,7 +62,7 @@
           <div class="player-title"><span class="live-dot"></span><span id="player-name">Experience</span><span class="legacy-pill" id="player-mode">LEGACY MODE</span></div>
           <div class="player-tools"><span class="player-capability muted">● no multiplayer</span><span class="player-capability muted">● no save</span><button id="copy-share" class="share-button">Share ↗</button></div>
         </div>
-        <iframe id="experience-frame" title="Playable experience" sandbox="allow-forms allow-pointer-lock allow-scripts" referrerpolicy="no-referrer"></iframe>
+        <iframe id="experience-frame" title="Playable experience" allow="autoplay; fullscreen; gamepad; picture-in-picture; webgpu; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-scripts allow-same-origin" referrerpolicy="no-referrer"></iframe>
       </div>
     </div>
 
@@ -70,7 +70,7 @@
       <form method="dialog" id="url-form">
         <button class="dialog-close" value="cancel" aria-label="Close">×</button>
         <p class="eyebrow">LEGACY COMPATIBILITY</p><h2>Open a web experience</h2>
-        <p class="dialog-copy">Use a hosted HTML entry point, such as a GitHub Pages URL. The page will run in a sandboxed iframe with no multiplayer or save capabilities.</p>
+        <p class="dialog-copy">Paste a hosted HTML entry point or a public GitHub repository. The loader will try the repository's GitHub Pages URL first, then open the source if no playable page is published.</p>
         <label for="experience-url">Experience URL</label>
         <input id="experience-url" type="url" placeholder="https://username.github.io/my-game/" required />
         <label for="experience-name">Name <span>(optional)</span></label>

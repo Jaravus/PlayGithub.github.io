@@ -30,15 +30,48 @@ function render() {
   });
 }
 
-function play(exp) {
+function githubPagesCandidates(url) {
+  const parsed = new URL(url);
+  if (parsed.hostname !== 'github.com') return [];
+  const parts = parsed.pathname.split('/').filter(Boolean);
+  if (parts.length < 2) return [];
+  const owner = parts[0];
+  const repo = parts[1].replace(/\.git$/, '');
+  return repo.toLowerCase() === `${owner.toLowerCase()}.github.io`
+    ? [`https://${owner.toLowerCase()}.github.io/`]
+    : [`https://${owner.toLowerCase()}.github.io/${repo}/`];
+}
+
+async function probe(url) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 4500);
+  try {
+    const response = await fetch(url, { method: 'GET', mode: 'cors', cache: 'no-store', signal: controller.signal });
+    return response.ok && /text\/html/i.test(response.headers.get('content-type') || '');
+  } catch { return false; } finally { clearTimeout(timer); }
+}
+
+async function resolveLaunchUrl(url) {
+  if (!url) return { url: null, playable: true };
+  const candidates = githubPagesCandidates(url);
+  for (const candidate of candidates) if (await probe(candidate)) return { url: candidate, playable: true };
+  return { url, playable: candidates.length === 0 };
+}
+
+async function play(exp) {
   if (exp.sourceOnly) {
     window.open(exp.repoUrl, '_blank', 'noopener,noreferrer');
+    return;
+  }
+  const resolved = await resolveLaunchUrl(exp.url);
+  if (!resolved.playable) {
+    window.open(exp.url, '_blank', 'noopener,noreferrer');
     return;
   }
   document.querySelector('#player-name').textContent = exp.name;
   document.querySelector('#player-mode').textContent = exp.tag === 'LEGACY' ? 'LEGACY MODE' : 'HOST API MODE';
   document.querySelectorAll('.player-capability').forEach((el, i) => { const enabled = i === 0 ? exp.multiplayer : exp.save; el.textContent = enabled ? `● ${i === 0 ? 'multiplayer' : 'save'} enabled` : `● no ${i === 0 ? 'multiplayer' : 'save'}`; el.classList.toggle('muted', !enabled); });
-  frame.src = exp.url || `data:text/html;charset=utf-8,${encodeURIComponent(exp.html)}`;
+  frame.src = resolved.url || `data:text/html;charset=utf-8,${encodeURIComponent(exp.html)}`;
   overlay.hidden = false; document.body.style.overflow = 'hidden'; history.replaceState({}, '', `#play/${encodeURIComponent(exp.id)}`);
 }
 
