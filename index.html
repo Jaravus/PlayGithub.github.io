@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1020" />
+    <title>OpenWorld Play</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="OpenWorld Play home">
+        <span class="brand-mark">◆</span>
+        <span>OpenWorld <em>Play</em></span>
+      </a>
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a class="nav-link active" href="#home">Discover</a>
+        <a class="nav-link" href="#worlds">Worlds</a>
+        <a class="nav-link" href="#sites">Sites</a>
+      </nav>
+      <div class="topbar-actions">
+        <span class="connection-dot"><i></i> Guest mode</span>
+        <button class="avatar" title="Identity settings" aria-label="Identity settings">G</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow">THE OPEN WEB, PLAYABLE</p>
+          <h1>Jump between<br /><span>living worlds.</span></h1>
+          <p class="hero-text">A universal player for HTML5 games, 3D spaces, and instant websites. No install. No gatekeeping.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#worlds">Explore worlds <span>↗</span></a>
+            <button class="button ghost" id="open-url">Open a URL</button>
+          </div>
+        </div>
+        <div class="hero-orbit" aria-hidden="true">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="planet"><span>✦</span></div>
+          <div class="orbit-label label-one">HTML5</div>
+          <div class="orbit-label label-two">WEBRTC</div>
+        </div>
+      </section>
+
+      <section class="content-section" id="worlds">
+        <div class="section-heading"><div><p class="eyebrow">CURATED EXPERIENCES</p><h2>Find your next place</h2></div><span class="section-count">06 available</span></div>
+        <div class="card-grid" id="experience-grid"></div>
+      </section>
+
+      <section class="compatibility-strip" id="sites">
+        <div class="strip-icon">⌘</div>
+        <div><p class="eyebrow">LEGACY COMPATIBILITY MODE</p><h2>Bring any HTML5 game or website.</h2><p>Paste a hosted entry URL and OpenWorld will wrap it in a safe player. Legacy experiences stay single-player and local-only until they adopt the host API.</p></div>
+        <button class="button light" id="paste-url">Load an HTML5 URL <span>→</span></button>
+      </section>
+    </main>
+
+    <div class="player-overlay" id="player-overlay" hidden>
+      <div class="player-shell">
+        <div class="player-toolbar">
+          <button class="close-player" id="close-player" aria-label="Close player">×</button>
+          <div class="player-title"><span class="live-dot"></span><span id="player-name">Experience</span><span class="legacy-pill" id="player-mode">LEGACY MODE</span></div>
+          <div class="player-tools"><span class="player-capability muted">● no multiplayer</span><span class="player-capability muted">● no save</span><button id="copy-share" class="share-button">Share ↗</button></div>
+        </div>
+        <iframe id="experience-frame" title="Playable experience" sandbox="allow-forms allow-pointer-lock allow-scripts" referrerpolicy="no-referrer"></iframe>
+      </div>
+    </div>
+
+    <dialog id="url-dialog">
+      <form method="dialog" id="url-form">
+        <button class="dialog-close" value="cancel" aria-label="Close">×</button>
+        <p class="eyebrow">LEGACY COMPATIBILITY</p><h2>Open a web experience</h2>
+        <p class="dialog-copy">Use a hosted HTML entry point, such as a GitHub Pages URL. The page will run in a sandboxed iframe with no multiplayer or save capabilities.</p>
+        <label for="experience-url">Experience URL</label>
+        <input id="experience-url" type="url" placeholder="https://username.github.io/my-game/" required />
+        <label for="experience-name">Name <span>(optional)</span></label>
+        <input id="experience-name" type="text" placeholder="My HTML5 game" />
+        <p class="form-error" id="form-error" role="alert"></p>
+        <button class="button primary full" value="default">Load in legacy mode <span>→</span></button>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
